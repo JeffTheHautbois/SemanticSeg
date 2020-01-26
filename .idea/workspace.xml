@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="be513ae8-e846-4fa1-853d-9d99cfbd4923" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1WJLxe5soISys6dxLnwCVeG2Ggm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.startup.tasks" />
+  </component>
+  <component name="RunManager" selected="Python.BackgroundSub">
+    <configuration name="BackgroundSub" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SemanticSeg" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/BackgroundSub.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="ImgSeg" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SemanticSeg" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ImgSeg.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.BackgroundSub" />
+        <item itemvalue="Python.ImgSeg" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="be513ae8-e846-4fa1-853d-9d99cfbd4923" name="Default Changelist" comment="" />
+      <created>1578862998628</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578862998628</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="239" y="49" key="#Inspections" timestamp="1579192915386">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state x="239" y="49" key="#Inspections/0.23.1280.722@0.23.1280.722" timestamp="1579192915386" />
+    <state x="327" y="119" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1579192358817">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state x="327" y="119" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.1280.722@0.23.1280.722" timestamp="1579192358817" />
+    <state width="619" height="166" key="GridCell.Tab.0.bottom" timestamp="1579295368937">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state width="619" height="166" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1579295368937" />
+    <state width="619" height="166" key="GridCell.Tab.0.center" timestamp="1579295368936">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state width="619" height="166" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1579295368936" />
+    <state width="619" height="166" key="GridCell.Tab.0.left" timestamp="1579295368935">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state width="619" height="166" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1579295368935" />
+    <state width="619" height="166" key="GridCell.Tab.0.right" timestamp="1579295368936">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state width="619" height="166" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1579295368936" />
+    <state x="140" y="23" key="SettingsEditor" timestamp="1579195735111">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state x="140" y="23" key="SettingsEditor/0.23.1280.722@0.23.1280.722" timestamp="1579195735111" />
+    <state x="316" y="216" key="com.intellij.ide.util.TipDialog" timestamp="1580067215680">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state x="316" y="216" key="com.intellij.ide.util.TipDialog/0.23.1280.722@0.23.1280.722" timestamp="1580067215680" />
+  </component>
+</project>
