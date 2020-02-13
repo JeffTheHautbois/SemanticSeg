@@ -137,12 +137,12 @@ def feature_match(capture,detector, imgList, descList, kpList, labelList):
 
 def bitwise_extract(fg_mask, fg_frame):
     fg_mask = remove_shadow(fg_mask)
-    kernel = np.ones((9,9),np.uint8)
-    opening = cv2.morphologyEx(fg_mask, cv2.MORPH_OPEN, kernel)
+    # kernel = np.ones((9,9),np.uint8)
+    # opening = cv2.morphologyEx(fg_mask, cv2.MORPH_OPEN, kernel)
     # open_3_ch = convert_1_to_3_channel(opening, fg_frame)
-    extractedImg = bitwise_segment(opening,fg_frame)
-    name = input("enter item name")
-    cv2.imwrite(name+".jpg",extractedImg)
+    extractedImg = bitwise_segment(fg_mask,fg_frame)
+    # name = input("enter item name")
+    # cv2.imwrite(name+".jpg",extractedImg)
     cv2.imshow("extracted", extractedImg)
     cv2.waitKey(0)
 
