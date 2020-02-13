@@ -5,37 +5,43 @@ import imutils
 
 MIN_MATCH_COUNT = 15
 
+
 def img_erosion(image):
-    kernel = np.ones((12,12),np.uint8)
-    eroded = cv2.erode(image,kernel,iterations = 3)
+    kernel = np.ones((12, 12), np.uint8)
+    eroded = cv2.erode(image, kernel, iterations=3)
     return eroded
 
-def convert_1_to_3_channel(mask,image):
+
+def convert_1_to_3_channel(mask, image):
     mask_3_ch = np.zeros_like(image)
-    mask_3_ch[:,:,0] = mask
-    mask_3_ch[:,:,1] = mask
-    mask_3_ch[:,:,2] = mask
+    mask_3_ch[:, :, 0] = mask
+    mask_3_ch[:, :, 1] = mask
+    mask_3_ch[:, :, 2] = mask
     return mask_3_ch
 
-def bitwise_segment(eroded_mask,image):
-    eroded_3_ch = convert_1_to_3_channel(eroded_mask,image)
+
+def bitwise_segment(eroded_mask, image):
+    eroded_3_ch = convert_1_to_3_channel(eroded_mask, image)
     segmented = cv2.bitwise_and(image, eroded_3_ch)
     return segmented
 
+
 def canny_edge_find_contours(image):
-    #canny edge detection
+    # canny edge detection
     edged = cv2.Canny(image, 30, 200)
 
-    #find contours using simple approx
-    contours, hierarchy=cv2.findContours(edged.copy(),cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
-    #sort contours largest to smallest.
-    contours=sorted(contours,key=cv2.contourArea,reverse=True)
+    # find contours using simple approx
+    contours, hierarchy = cv2.findContours(
+        edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    # sort contours largest to smallest.
+    contours = sorted(contours, key=cv2.contourArea, reverse=True)
 
     return contours[0]
 
+
 def gb_cut_via_contour(cnt, image):
-    x,y,w,h = cv2.boundingRect(cnt)
-    rect = (x,y,w,h)
+    x, y, w, h = cv2.boundingRect(cnt)
+    rect = (x, y, w, h)
 
     mask = np.zeros(image.shape[:2], np.uint8)
     bgdModel = np.zeros((1, 65), np.float64)
@@ -49,15 +55,18 @@ def gb_cut_via_contour(cnt, image):
     cv2.imshow("newimg", newimg)
     cv2.waitKey(0)
 
+
 def extract_item(fg_mask, fg_frame):
     eroded = img_erosion(fg_mask)
-    segmented = bitwise_segment(eroded,fg_frame)
+    segmented = bitwise_segment(eroded, fg_frame)
     cnt = canny_edge_find_contours(segmented)
-    gb_cut_via_contour(cnt,fg_frame)
+    gb_cut_via_contour(cnt, fg_frame)
+
 
 def remove_shadow(fg_mask):
-    ret,thresh = cv2.threshold(fg_mask,245,255,cv2.THRESH_BINARY)
+    ret, thresh = cv2.threshold(fg_mask, 245, 255, cv2.THRESH_BINARY)
     return thresh
+
 
 def get_feature_list(detector):
     imgList = []
@@ -72,12 +81,12 @@ def get_feature_list(detector):
     kpList.append(trainKP)
     labelList.append("Organic Soy Beverage")
 
-    trainImg = cv2.imread("apple.jpg",0)
-    trainKP, trainDesc = detector.detectAndCompute(trainImg, None)
-    imgList.append(trainImg)
-    descList.append(trainDesc)
-    kpList.append(trainKP)
-    labelList.append("Apple")
+    # trainImg = cv2.imread("apple.jpg", 0)
+    # trainKP, trainDesc = detector.detectAndCompute(trainImg, None)
+    # imgList.append(trainImg)
+    # descList.append(trainDesc)
+    # kpList.append(trainKP)
+    # labelList.append("Apple")
 
     # trainImg = cv2.imread("banana.jpg",0)
     # trainKP, trainDesc = detector.detectAndCompute(trainImg, None)
@@ -87,10 +96,11 @@ def get_feature_list(detector):
     # labelList.append("Banana")
     return imgList, descList, kpList, labelList
 
-def feature_match(capture,detector, imgList, descList, kpList, labelList):
-    # FLANN_INDEX_KDITREE = 0
-    # flannParam = dict(algorithm=FLANN_INDEX_KDITREE, tree=12)
-    # flann = cv2.FlannBasedMatcher(flannParam, {})
+
+def feature_match(capture, detector, imgList, descList, kpList, labelList):
+    FLANN_INDEX_KDITREE = 0
+    flannParam = dict(algorithm=FLANN_INDEX_KDITREE, tree=12)
+    flann = cv2.FlannBasedMatcher(flannParam, {})
     while True:
         ret, QueryImgBGR = capture.read()
         QueryImg = cv2.cvtColor(QueryImgBGR, cv2.COLOR_BGR2GRAY)
@@ -102,13 +112,15 @@ def feature_match(capture,detector, imgList, descList, kpList, labelList):
             trainDesc = descList[i]
             trainKP = kpList[i]
             # matches = flann.knnMatch(queryDesc, trainDesc, k=2)
-            bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-            matches = bf.match(queryDesc, trainDesc)
-            matches = sorted(matches, key = lambda x:x.distance)
+            # bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+            # matches = bf.match(queryDesc, trainDesc)
+            # matches = sorted(matches, key = lambda x:x.distance)
+            matches = flann.knnMatch(queryDesc, trainDesc, k=2)
+
             goodMatch = []
             ratio_thresh = 0.7
-            for i, m in enumerate(matches):
-                if i < len(matches) - 1 and m.distance < 0.7 * matches[i+1].distance:
+            for m, n in matches:
+                if(m.distance < ratio_thresh*n.distance):
                     goodMatch.append(m)
             if(len(goodMatch) > MIN_MATCH_COUNT):
                 tp = []
@@ -130,26 +142,28 @@ def feature_match(capture,detector, imgList, descList, kpList, labelList):
                         queryBorder)], True, (255, 255, 0), 5)
             else:
                 print("Not Enough match found- %d/%d",
-                    len(goodMatch), MIN_MATCH_COUNT)
+                      len(goodMatch), MIN_MATCH_COUNT)
         cv2.imshow('result', QueryImgBGR)
         if cv2.waitKey(30) == 0x1b:
             break
+
 
 def bitwise_extract(fg_mask, fg_frame):
     fg_mask = remove_shadow(fg_mask)
     # kernel = np.ones((9,9),np.uint8)
     # opening = cv2.morphologyEx(fg_mask, cv2.MORPH_OPEN, kernel)
     # open_3_ch = convert_1_to_3_channel(opening, fg_frame)
-    extractedImg = bitwise_segment(fg_mask,fg_frame)
+    extractedImg = bitwise_segment(fg_mask, fg_frame)
     # name = input("enter item name")
     # cv2.imwrite(name+".jpg",extractedImg)
+
     cv2.imshow("extracted", extractedImg)
     cv2.waitKey(0)
 
+
 def main():
 
-
-    detector = cv2.ORB_create()
+    detector = cv2.xfeatures2d.SURF_create(4000)
 
     imgList, descList, kpList, labelList = get_feature_list(detector)
 
@@ -173,16 +187,18 @@ def main():
         if (k == 0x20):
             update_bg_model = not update_bg_model
             print("updating", update_bg_model)
-        elif (k == 0x73): #"key = 's'"
+        elif (k == 0x73):  # "key = 's'"
 
             print("segment")
             # extract_item(fg_mask,frame)
-            bitwise_extract(fg_mask,frame)
-        elif(k == 0x42): #"key = 'B'"
-            feature_match(capture,detector,imgList, descList, kpList, labelList)
+            bitwise_extract(fg_mask, frame)
+        elif(k == 0x42):  # "key = 'B'"
+            feature_match(capture, detector, imgList,
+                          descList, kpList, labelList)
 
-        elif (k == 0x1b): #"key = 'esc'"
+        elif (k == 0x1b):  # "key = 'esc'"
             break
+
 
 if __name__ == "__main__":
     main()
