@@ -168,7 +168,8 @@ def main_2():
     capture.set(3, 1280)  # set the resolution
     capture.set(4, 720)
     capture.set(cv.CAP_PROP_AUTOFOCUS, 0)
-    capture.set(cv.CAP_PROP_AUTO_EXPOSURE, 0.25)
+    capture.set(cv.CAP_PROP_AUTO_EXPOSURE, 0)
+    capture.set(cv.CAP_PROP_EXPOSURE, 3)
     #capture.set(cv.CAP_PROP_CONTRAST, 0)
     back_sub = cv.createBackgroundSubtractorMOG2(detectShadows=False)
     back_sub.setVarThreshold(100)
@@ -183,8 +184,14 @@ def main_2():
         if (k == 0x20):
             update_bg_model = not update_bg_model
             print("updating", update_bg_model)
-        # elif (k == 0x42):
-
+        elif (k == 0x73):
+            cv.imwrite("D:\PyProj\SemanticSeg\Fg_mask.jpg", fg_mask) 
+            cv.imwrite("D:\PyProj\SemanticSeg\Fg_frame.jpg", frame) 
+            print("saved fg_frame & fg_mask")
+        elif(k == 0x42):
+            cv.imwrite("D:\PyProj\SemanticSeg\Bg_mask.jpg", fg_mask)
+            cv.imwrite("D:\PyProj\SemanticSeg\Bg_frame.jpg", frame) 
+            print("saved bg_frame")
         elif (k == 0x1b):
             break
 

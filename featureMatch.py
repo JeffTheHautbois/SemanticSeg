@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-MIN_MATCH_COUNT = 12
+MIN_MATCH_COUNT = 15
 
-detector = cv2.xfeatures2d.SURF_create(4000)
+detector = cv2.ORB_create()
 
 FLANN_INDEX_KDITREE = 0
 flannParam = dict(algorithm=FLANN_INDEX_KDITREE, tree=12)
