@@ -3,7 +3,7 @@ import cv2
 import time
 import imutils
 
-MIN_MATCH_COUNT = 15
+MIN_MATCH_COUNT = 10
 
 
 def img_erosion(image):
@@ -81,14 +81,15 @@ def get_feature_list(detector):
     kpList.append(trainKP)
     labelList.append("Organic Soy Beverage")
 
-    # trainImg = cv2.imread("apple.jpg", 0)
-    # trainKP, trainDesc = detector.detectAndCompute(trainImg, None)
-    # imgList.append(trainImg)
-    # descList.append(trainDesc)
-    # kpList.append(trainKP)
-    # labelList.append("Apple")
+    trainImg = cv2.imread("nestea.png", 0)
+    trainKP, trainDesc = detector.detectAndCompute(trainImg, None)
+    print(trainDesc == None)
+    imgList.append(trainImg)
+    descList.append(trainDesc)
+    kpList.append(trainKP)
+    labelList.append("Nestea")
 
-    # trainImg = cv2.imread("banana.jpg",0)
+    # trainImg = cv2.imread("Banana.jpg",0)
     # trainKP, trainDesc = detector.detectAndCompute(trainImg, None)
     # imgList.append(trainImg)
     # descList.append(trainDesc)
@@ -99,7 +100,7 @@ def get_feature_list(detector):
 
 def feature_match(capture, detector, imgList, descList, kpList, labelList):
     FLANN_INDEX_KDITREE = 0
-    flannParam = dict(algorithm=FLANN_INDEX_KDITREE, tree=12)
+    flannParam = dict(algorithm=FLANN_INDEX_KDITREE, tree=10)
     flann = cv2.FlannBasedMatcher(flannParam, {})
     while True:
         ret, QueryImgBGR = capture.read()
@@ -111,10 +112,10 @@ def feature_match(capture, detector, imgList, descList, kpList, labelList):
             trainImg = imgList[i]
             trainDesc = descList[i]
             trainKP = kpList[i]
-            # matches = flann.knnMatch(queryDesc, trainDesc, k=2)
             # bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
             # matches = bf.match(queryDesc, trainDesc)
             # matches = sorted(matches, key = lambda x:x.distance)
+            print(trainDesc)
             matches = flann.knnMatch(queryDesc, trainDesc, k=2)
 
             goodMatch = []
